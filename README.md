@@ -39,7 +39,7 @@ Spring Boot + Gradle で作成したECサイトのバックエンドAPI。
 |-------|----|----|
 
 ## ER図
-![ER Diagram](docs/er-diagram.png)
+![EC Diagram](docs/ec-diagram.png)
 
 ## 起動方法
 ```bash
