@@ -17,6 +17,13 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### Eclipse ###
+.classpath
+.project
+.settings
+.metadate
+bin/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
