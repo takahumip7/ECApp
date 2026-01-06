@@ -14,18 +14,46 @@ Spring Boot + Gradle で作成したECサイトのバックエンドAPI。
 ## 機能一覧
 - ユーザー管理
 - 商品管理
+- カート
 - 注文管理
 
 ## API設計
+### 商品API
+| Method | URL                       | 説明         |
+| ------ | ------------------------- | ---------- |
+| GET    | /api/products             | 商品一覧取得     |
+| GET    | /api/products/{productId} | 商品詳細取得     |
+| POST   | /api/products             | 商品登録       |
+| PUT    | /api/products/{productId} | 商品更新（全更新）  |
+| PATCH  | /api/products/{productId} | 商品更新（部分更新） |
+| DELETE | /api/products/{productId} | 商品削除       |
+
 ### ユーザーAPI
-| Method | URL | 説明 |
-|------|-----|-----|
-| GET | /api/users | ユーザー一覧取得 |
-| POST | /api/users | ユーザー登録 |
+| Method | URL                 | 説明           |
+| ------ | ------------------- | ------------ |
+| POST   | /api/users          | ユーザー新規登録     |
+| GET    | /api/users/{userId} | ユーザー情報取得     |
+| PUT    | /api/users/{userId} | ユーザー更新（全更新）  |
+| PATCH  | /api/users/{userId} | ユーザー更新（部分更新） |
+| DELETE | /api/users/{userId} | ユーザー削除       |
+| POST   | /api/login          | ログイン         |
+
+### カートAPI
+| Method | URL                   | 説明      |
+| ------ | --------------------- | ------- |
+| GET    | /api/cart             | カート一覧取得 |
+| POST   | /api/cart/{productId} | カート商品追加 |
+| PATCH  | /api/cart/{productId} | カート数量変更 |
+| DELETE | /api/cart/{productId} | カート商品削除 |
 
 ### 注文API
-| Method | URL | 説明 |
-|------|-----|-----|
+| Method | URL                          | 説明        |
+| ------ | ---------------------------- | --------- |
+| POST   | /api/orders                  | 注文作成      |
+| GET    | /api/orders                  | 注文一覧取得    |
+| GET    | /api/orders/{orderId}        | 注文詳細取得    |
+| PATCH  | /api/orders/{orderId}/status | 注文ステータス更新 |
+
 
 ## DB設計
 ### users テーブル
@@ -100,6 +128,7 @@ Spring Boot + Gradle で作成したECサイトのバックエンドAPI。
 | address2 | VARCHAR(255) | | 建物名・部屋番号（任意） |
 | created_at | DATETIME | ○ | 作成日時 |
 | updated_at | DATETIME | ○ | 更新日時 |
+
 
 ## ER図
 ![EC Diagram](docs/ec-diagram.png)
