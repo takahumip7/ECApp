@@ -12,12 +12,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class User {
@@ -46,4 +44,23 @@ public class User {
 	/** 更新日次 */
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
+	
+	public User(String name, String email, String encodedPassword) {
+		this.name = name;
+		this.email = email;
+		this.password = encodedPassword;
+		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
+	}
+	
+	// 意図した更新だけ許可
+	public void changeName(String name) {
+		this.name = name;
+		this.updatedAt = LocalDateTime.now();
+	}
+	
+	public void changePassword(String encodedPassword) {
+        this.password = encodedPassword;
+        this.updatedAt = LocalDateTime.now();
+	}
 }
