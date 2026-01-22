@@ -3,6 +3,8 @@ package com.ec.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ec.dto.UserRegisterRequest;
+import com.ec.dto.UserRegisterResponse;
 import com.ec.entity.User;
 import com.ec.repository.UserRepository;
 
@@ -18,18 +20,23 @@ public class UserService {
 	}
 	
 	// ユーザー登録
-	public void register(String name, String email, String password) {
-		// TODO : email重複チェック
-		if (userRepository.findByEmail(email).isPresent()) {
-			throw new IllegalArgumentException("すでに登録されています。");
+	public UserRegisterResponse register(UserRegisterRequest dto) {
+		// email重複チェック
+		if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+			throw new IllegalArgumentException("EMAIL_ALREADY_EXISTS");
 		}
 		
-		// TODO : passwordハッシュ化
-		String hashed = passwordEncoder.encode(password);
-		// TODO : user作成&保存
-		User user = new User(name, email, hashed);
+		// passwordハッシュ化
+		String hashed = passwordEncoder.encode(dto.getPassword());
 		
-		userRepository.save(user);
+		// userのentity作成
+		
+		User user = new User(dto.getName(), dto.getEmail(), hashed);
+		// 保存
+		User savedUser = userRepository.save(user);
+		
+		// response用DTOに変換して返す
+		return new UserRegisterResponse(savedUser.getId(), savedUser.getName(), savedUser.getEmail());
 	}
 
 	//ログイン
