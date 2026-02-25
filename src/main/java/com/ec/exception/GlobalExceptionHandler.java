@@ -12,6 +12,27 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException e) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+		
+		HttpStatus status;
+		
+		switch (e.getMessage()) {
+		
+			case "USER_NOT_FOUND":
+				status = HttpStatus.NOT_FOUND;
+				break;
+				
+			case "PASSWORD_INCORRECT":
+				status = HttpStatus.UNAUTHORIZED;
+				break;
+				
+			case "EMAIL_ALREADY_EXISTS":
+				status = HttpStatus.CONFLICT;
+				break;
+				
+			default:
+				status = HttpStatus.BAD_REQUEST;
+		}
+		
+		return ResponseEntity.status(status).body(Map.of("error", e.getMessage()));
 	}
 }

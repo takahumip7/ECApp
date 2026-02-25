@@ -53,5 +53,6 @@ public class UserService {
 		// ログイン成功→レスポンスDTOを返す
 		return new UserLoginResponse(user.getId(), user.getName(),user.getEmail());
 	}
+	
 	//ユーザー情報取得(ID)
 }
