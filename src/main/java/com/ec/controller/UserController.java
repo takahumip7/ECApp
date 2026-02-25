@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ec.dto.UserLoginRequest;
+import com.ec.dto.UserLoginResponse;
 import com.ec.dto.UserRegisterRequest;
 import com.ec.dto.UserRegisterResponse;
 import com.ec.service.UserService;
@@ -24,9 +26,16 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest dto) {
 		
-		UserRegisterResponse response = userService.register(dto);
+		UserRegisterResponse responseRegister = userService.register(dto);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseRegister);
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
+		
+		UserLoginResponse responseLogin = userService.login(dto);
+		
+		return ResponseEntity.ok(responseLogin);
+	}
 }
