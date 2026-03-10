@@ -1,5 +1,7 @@
 package com.ec.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,13 @@ public class UserService {
 	
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtService jwtService;
 	
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+		super();
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.jwtService = jwtService;
 	}
 	
 	// ユーザー登録
@@ -50,8 +55,22 @@ public class UserService {
 			throw new IllegalArgumentException("PASSWORD_INCORRECT");
 		}
 		
+		String token = jwtService.generateToken(user.getEmail());
+		
 		// ログイン成功→レスポンスDTOを返す
-		return new UserLoginResponse(user.getId(), user.getName(),user.getEmail());
+		return new UserLoginResponse(user.getId(), user.getName(),user.getEmail(), token);
+	}
+	
+	public UserLoginResponse getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("USER_NOT_FOUND"));
+		return new UserLoginResponse(
+			user.getId(),
+			user.getName(),
+			user.getEmail(),
+			null
+		);
 	}
 	
 	//ユーザー情報取得(ID)
