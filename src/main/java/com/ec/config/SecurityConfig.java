@@ -38,6 +38,7 @@ public class SecurityConfig {
     		.authorizeHttpRequests(auth -> auth
 				// 認証不要API
 				.requestMatchers("/users/register", "/users/login").permitAll()
+			    .requestMatchers("/products/**").permitAll() // 商品も認証許可
 				// その他は認証必要
 				.anyRequest().authenticated()
     		)

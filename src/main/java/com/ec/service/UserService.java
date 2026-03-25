@@ -61,6 +61,7 @@ public class UserService {
 		return new UserLoginResponse(user.getId(), user.getName(),user.getEmail(), token);
 	}
 	
+	//ユーザー情報取得(ID)
 	public UserLoginResponse getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -72,6 +73,4 @@ public class UserService {
 			null
 		);
 	}
-	
-	//ユーザー情報取得(ID)
 }
