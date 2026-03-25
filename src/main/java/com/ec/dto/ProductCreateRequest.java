@@ -1,17 +1,12 @@
-package com.ec.entity;
-
-import java.time.LocalDateTime;
+package com.ec.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Product {
+public class ProductCreateRequest {
 
-	/** 商品ID */
-	private Long id;
-	
 	/** 商品名 */
 	private String name;
 	
@@ -23,11 +18,4 @@ public class Product {
 	
 	/** 在庫数 */
 	private int stock;
-	
-	/** 作成日次 */
-	private LocalDateTime createdAt;
-	
-	/** 更新日次 */
-	private LocalDateTime updatedAt;
-	
 }
